@@ -324,7 +324,9 @@ requestAnimationFrame(animate);
 
 
 drive();
+moveOpponents();
 
+checkCollision();
 
 camera.position.z =
 car.position.z + 12;
@@ -431,5 +433,108 @@ score;
 
 document.getElementById("speed").innerHTML =
 Math.floor(speed*100);
+
+}
+// OPPONENT CARS
+
+let opponents=[];
+
+
+function createOpponent(z){
+
+let enemy =
+new THREE.Mesh(
+
+new THREE.BoxGeometry(
+2,
+0.6,
+4
+),
+
+new THREE.MeshPhongMaterial({
+color:0x0000ff
+})
+
+);
+
+
+enemy.position.set(
+0,
+0.6,
+z
+);
+
+
+scene.add(enemy);
+
+opponents.push(enemy);
+
+}
+
+
+// Create opponents
+
+createOpponent(-40);
+
+createOpponent(-80);
+
+createOpponent(-120);
+
+
+
+// Move opponents
+
+function moveOpponents(){
+
+opponents.forEach(function(enemy){
+
+
+enemy.position.z += 0.05;
+
+
+
+if(enemy.position.z > car.position.z + 10){
+
+enemy.position.z =
+car.position.z - 100;
+
+}
+
+
+});
+
+
+}
+
+
+
+// Collision check
+
+function checkCollision(){
+
+
+opponents.forEach(function(enemy){
+
+
+let distance =
+car.position.distanceTo(
+enemy.position
+);
+
+
+
+if(distance < 2){
+
+speed = 0;
+
+
+alert("Crash! Try again 🚗💥");
+
+
+}
+
+
+});
+
 
 }
