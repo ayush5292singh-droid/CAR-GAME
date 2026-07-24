@@ -20,6 +20,8 @@ canvas{
 display:block;
 
 }
+
+
 #controls{
 
 position:fixed;
@@ -31,6 +33,7 @@ width:100%;
 text-align:center;
 
 }
+
 
 #controls button{
 
@@ -44,7 +47,13 @@ border-radius:15px;
 
 border:none;
 
+background:#00aaff;
+
+color:white;
+
 }
+
+
 #ui{
 
 position:fixed;
@@ -61,23 +70,8 @@ font-family:Arial;
 
 }
 
-#ui button{
 
-padding:10px 20px;
-
-font-size:18px;
-
-border-radius:10px;
-
-}
-  #controls button{
-
-background:#00aaff;
-
-color:white;
-
-}
-  #menu{
+#menu{
 
 position:fixed;
 
@@ -113,24 +107,33 @@ font-size:20px;
 border-radius:15px;
 
 }
+
+
 </style>
 
 </head>
 
 
 <body>
- <div id="menu">
+
+
+<div id="menu">
 
 <h1>🏎️ 3D Racing</h1>
 
-<button onclick="startGame()">START RACE</button>
+<button onclick="startGame()">
+START RACE
+</button>
 
-<button onclick="restartGame()">RESTART</button>
+<button onclick="restartGame()">
+RESTART
+</button>
 
-</div> 
+</div>
+
+
+
 <div id="ui">
-
-<button onclick="startGame()">START</button>
 
 <p>Speed: <span id="speed">0</span></p>
 
@@ -140,7 +143,7 @@ border-radius:15px;
 
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
 
 <div id="controls">
 
@@ -149,8 +152,15 @@ border-radius:15px;
 <button onclick="speedUp()">⬆️</button>
 
 <button onclick="moveRight()">➡️</button>
+
 <button onclick="nitro()">🚀</button>
+
 </div>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
 <script src="script.js"></script>
 
 
