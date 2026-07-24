@@ -336,7 +336,8 @@ car.position.x;
 
 camera.lookAt(car.position);
 
-
+updateGame();
+  
 renderer.render(
 scene,
 camera
@@ -385,5 +386,50 @@ speed += 0.02;
 function drive(){
 
 car.position.z -= speed;
+
+}
+let gameStarted=false;
+
+let gameTime=0;
+
+let score=0;
+
+
+
+function startGame(){
+
+gameStarted=true;
+
+gameTime=0;
+
+score=0;
+
+}
+
+
+
+// Game information update
+
+function updateGame(){
+
+if(gameStarted){
+
+gameTime += 1/60;
+
+score += 1;
+
+}
+
+
+document.getElementById("time").innerHTML =
+Math.floor(gameTime);
+
+
+document.getElementById("score").innerHTML =
+score;
+
+
+document.getElementById("speed").innerHTML =
+Math.floor(speed*100);
 
 }
