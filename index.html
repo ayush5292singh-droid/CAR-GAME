@@ -77,12 +77,57 @@ background:#00aaff;
 color:white;
 
 }
+  #menu{
+
+position:fixed;
+
+top:50%;
+
+left:50%;
+
+transform:translate(-50%,-50%);
+
+text-align:center;
+
+color:white;
+
+font-family:Arial;
+
+background:rgba(0,0,0,0.5);
+
+padding:30px;
+
+border-radius:20px;
+
+}
+
+
+#menu button{
+
+padding:15px 25px;
+
+margin:10px;
+
+font-size:20px;
+
+border-radius:15px;
+
+}
 </style>
 
 </head>
 
 
 <body>
+ <div id="menu">
+
+<h1>🏎️ 3D Racing</h1>
+
+<button onclick="startGame()">START RACE</button>
+
+<button onclick="restartGame()">RESTART</button>
+
+</div> 
 <div id="ui">
 
 <button onclick="startGame()">START</button>
