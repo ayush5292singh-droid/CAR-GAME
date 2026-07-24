@@ -557,3 +557,34 @@ speed = normalSpeed;
 },3000);
 
 }
+// RESTART GAME
+
+function restartGame(){
+
+car.position.set(
+0,
+0,
+0
+);
+
+
+speed = normalSpeed;
+
+
+gameTime=0;
+
+score=0;
+
+
+}
+
+
+// Hide menu after start
+
+function startGame(){
+
+gameStarted=true;
+
+document.getElementById("menu").style.display="none";
+
+}
