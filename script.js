@@ -2,6 +2,8 @@
 
 let scene = new THREE.Scene();
 
+scene.background = new THREE.Color(0x87CEEB);
+
 
 // Camera
 
@@ -536,5 +538,22 @@ alert("Crash! Try again 🚗💥");
 
 });
 
+
+}
+// NITRO BOOST
+
+let normalSpeed = 0.05;
+
+
+function nitro(){
+
+speed = 0.2;
+
+
+setTimeout(function(){
+
+speed = normalSpeed;
+
+},3000);
 
 }
