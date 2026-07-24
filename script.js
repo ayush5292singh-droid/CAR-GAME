@@ -67,12 +67,107 @@ scene.add(ground);
 camera.position.set(
 0,
 5,
-10
+12
 );
 
 
 camera.lookAt(0,0,0);
+// CAR
 
+let car = new THREE.Group();
+
+
+// Car body
+
+let bodyGeometry = new THREE.BoxGeometry(
+2,
+0.6,
+4
+);
+
+
+let bodyMaterial = new THREE.MeshPhongMaterial({
+color:0xff0000
+});
+
+
+let body = new THREE.Mesh(
+bodyGeometry,
+bodyMaterial
+);
+
+
+body.position.y = 0.6;
+
+car.add(body);
+
+
+// Wheels
+
+function createWheel(x,z){
+
+let wheelGeometry =
+new THREE.CylinderGeometry(
+0.4,
+0.4,
+0.3,
+32
+);
+
+
+let wheelMaterial =
+new THREE.MeshPhongMaterial({
+color:0x000000
+});
+
+
+let wheel =
+new THREE.Mesh(
+wheelGeometry,
+wheelMaterial
+);
+
+
+wheel.rotation.z =
+Math.PI/2;
+
+
+wheel.position.set(
+x,
+0.4,
+z
+);
+
+
+car.add(wheel);
+
+}
+
+
+// Add four wheels
+
+createWheel(-1,-1.4);
+
+createWheel(1,-1.4);
+
+createWheel(-1,1.4);
+
+createWheel(1,1.4);
+
+
+
+// Add car to scene
+
+scene.add(car);
+
+
+// Car starting position
+
+car.position.set(
+0,
+0,
+0
+);
 
 
 // Animation
