@@ -176,6 +176,21 @@ function animate(){
 
 requestAnimationFrame(animate);
 
+
+drive();
+
+
+camera.position.z =
+car.position.z + 12;
+
+
+camera.position.x =
+car.position.x;
+
+
+camera.lookAt(car.position);
+
+
 renderer.render(
 scene,
 camera
@@ -185,3 +200,44 @@ camera
 
 
 animate();
+// CAR CONTROLS
+
+
+let speed = 0.05;
+
+
+// Move left
+
+function moveLeft(){
+
+car.position.x -= 0.5;
+
+}
+
+
+// Move right
+
+function moveRight(){
+
+car.position.x += 0.5;
+
+}
+
+
+// Increase speed
+
+function speedUp(){
+
+speed += 0.02;
+
+}
+
+
+
+// Car forward movement
+
+function drive(){
+
+car.position.z -= speed;
+
+}
