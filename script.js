@@ -1,21 +1,23 @@
-// Create scene
+// 3D RACING GAME - FINAL SCRIPT
+// PART A
+
 
 let scene = new THREE.Scene();
 
 scene.background = new THREE.Color(0x87CEEB);
 
 
-// Camera
+// CAMERA
 
 let camera = new THREE.PerspectiveCamera(
 75,
-window.innerWidth/window.innerHeight,
+window.innerWidth / window.innerHeight,
 0.1,
 1000
 );
 
 
-// Renderer
+// RENDERER
 
 let renderer = new THREE.WebGLRenderer();
 
@@ -27,7 +29,7 @@ window.innerHeight
 document.body.appendChild(renderer.domElement);
 
 
-// Light
+// LIGHT
 
 let light = new THREE.DirectionalLight(
 0xffffff,
@@ -39,47 +41,35 @@ light.position.set(5,10,5);
 scene.add(light);
 
 
-// Ground
+// GROUND
 
-let groundGeometry =
-new THREE.PlaneGeometry(200,200);
+let ground = new THREE.Mesh(
 
+new THREE.PlaneGeometry(200,200),
 
-let groundMaterial =
 new THREE.MeshPhongMaterial({
 color:0x228B22
-});
+})
 
-
-let ground =
-new THREE.Mesh(
-groundGeometry,
-groundMaterial
 );
-
 
 ground.rotation.x = -Math.PI/2;
 
-
 scene.add(ground);
+
+
+
 // ROAD
 
-let roadGeometry = new THREE.PlaneGeometry(
-8,
-200
-);
-
-
-let roadMaterial = new THREE.MeshPhongMaterial({
-color:0x333333
-});
-
-
 let road = new THREE.Mesh(
-roadGeometry,
-roadMaterial
-);
 
+new THREE.PlaneGeometry(8,200),
+
+new THREE.MeshPhongMaterial({
+color:0x333333
+})
+
+);
 
 road.rotation.x = -Math.PI/2;
 
@@ -93,24 +83,18 @@ scene.add(road);
 
 for(let i=0;i<20;i++){
 
-let lineGeometry =
+let line = new THREE.Mesh(
+
 new THREE.BoxGeometry(
 0.2,
 0.02,
 5
-);
+),
 
-
-let lineMaterial =
 new THREE.MeshBasicMaterial({
 color:0xffffff
-});
+})
 
-
-let line =
-new THREE.Mesh(
-lineGeometry,
-lineMaterial
 );
 
 
@@ -127,28 +111,22 @@ scene.add(line);
 
 
 
-// TREES
+// TREE FUNCTION
 
 function createTree(x,z){
 
-let trunkGeometry =
+let trunk = new THREE.Mesh(
+
 new THREE.CylinderGeometry(
 0.2,
 0.2,
 2
-);
+),
 
-
-let trunkMaterial =
 new THREE.MeshPhongMaterial({
 color:0x8B4513
-});
+})
 
-
-let trunk =
-new THREE.Mesh(
-trunkGeometry,
-trunkMaterial
 );
 
 
@@ -163,22 +141,14 @@ scene.add(trunk);
 
 
 
-let leavesGeometry =
-new THREE.SphereGeometry(
-1
-);
+let leaves = new THREE.Mesh(
 
+new THREE.SphereGeometry(1),
 
-let leavesMaterial =
 new THREE.MeshPhongMaterial({
 color:0x00aa00
-});
+})
 
-
-let leaves =
-new THREE.Mesh(
-leavesGeometry,
-leavesMaterial
 );
 
 
@@ -194,54 +164,78 @@ scene.add(leaves);
 }
 
 
-// Add trees
+// TREES
 
 for(let i=0;i<20;i++){
 
-createTree(
--6,
--i*10
-);
+createTree(-6,-i*10);
 
-createTree(
-6,
--i*10
-);
+createTree(6,-i*10);
 
 }
 
-// Camera position
 
-camera.position.set(
-0,
-5,
-12
+// CITY BUILDINGS
+
+function createBuilding(x,z){
+
+let height = Math.random()*8+3;
+
+
+let building = new THREE.Mesh(
+
+new THREE.BoxGeometry(
+3,
+height,
+3
+),
+
+new THREE.MeshPhongMaterial({
+color:0x777777
+})
+
 );
 
 
-camera.lookAt(0,0,0);
+building.position.set(
+x,
+height/2,
+z
+);
+
+
+scene.add(building);
+
+}
+
+
+for(let i=0;i<30;i++){
+
+createBuilding(-12,-i*8);
+
+createBuilding(12,-i*8);
+
+}
+// PART B
+
+
 // CAR
 
 let car = new THREE.Group();
 
 
-// Car body
+let body = new THREE.Mesh(
 
-let bodyGeometry = new THREE.BoxGeometry(
+new THREE.BoxGeometry(
 2,
 0.6,
 4
-);
+),
 
-
-let bodyMaterial = new THREE.MeshPhongMaterial({
+new THREE.MeshPhongMaterial({
 color:0xff0000
-});
+})
 
-
-let body = new THREE.Mesh(
-bodyGeometry,
-bodyMaterial
 );
 
 
@@ -250,34 +244,26 @@ body.position.y = 0.6;
 car.add(body);
 
 
-// Wheels
 
 function createWheel(x,z){
 
-let wheelGeometry =
+let wheel = new THREE.Mesh(
+
 new THREE.CylinderGeometry(
 0.4,
 0.4,
 0.3,
 32
-);
+),
 
-
-let wheelMaterial =
 new THREE.MeshPhongMaterial({
 color:0x000000
-});
+})
 
-
-let wheel =
-new THREE.Mesh(
-wheelGeometry,
-wheelMaterial
 );
 
 
-wheel.rotation.z =
-Math.PI/2;
+wheel.rotation.z = Math.PI/2;
 
 
 wheel.position.set(
@@ -292,7 +278,6 @@ car.add(wheel);
 }
 
 
-// Add four wheels
 
 createWheel(-1,-1.4);
 
@@ -304,12 +289,122 @@ createWheel(1,1.4);
 
 
 
-// Add car to scene
-
 scene.add(car);
 
 
-// Car starting position
+car.position.set(0,0,0);
+
+
+
+// CAMERA
+
+camera.position.set(
+0,
+5,
+12
+);
+
+
+
+// GAME VARIABLES
+
+let speed = 0.05;
+
+let normalSpeed = 0.05;
+
+let gameStarted = false;
+
+let gameTime = 0;
+
+let score = 0;
+
+
+
+// CONTROLS
+
+function moveLeft(){
+
+if(gameStarted){
+
+car.position.x -= 0.5;
+
+}
+
+}
+
+
+function moveRight(){
+
+if(gameStarted){
+
+car.position.x += 0.5;
+
+}
+
+}
+
+
+function speedUp(){
+
+if(gameStarted){
+
+speed += 0.02;
+
+}
+
+}
+
+
+
+function nitro(){
+
+if(gameStarted){
+
+speed = 0.2;
+
+
+setTimeout(function(){
+
+speed = normalSpeed;
+
+},3000);
+
+}
+
+}
+
+
+
+// START
+
+function startGame(){
+
+gameStarted = true;
+
+
+gameTime = 0;
+
+score = 0;
+
+
+let menu =
+document.getElementById("menu");
+
+
+if(menu){
+
+menu.style.display="none";
+
+}
+
+}
+
+
+
+
+// RESTART
+
+function restartGame(){
 
 car.position.set(
 0,
@@ -318,125 +413,30 @@ car.position.set(
 );
 
 
-// Animation
-
-function animate(){
-
-requestAnimationFrame(animate);
+speed = normalSpeed;
 
 
-drive();
-moveOpponents();
+gameTime = 0;
 
-checkCollision();
+score = 0;
 
-camera.position.z =
-car.position.z + 12;
+gameStarted = false;
 
 
-camera.position.x =
-car.position.x;
+let menu =
+document.getElementById("menu");
 
 
-camera.lookAt(car.position);
+if(menu){
 
-updateGame();
-  
-renderer.render(
-scene,
-camera
-);
+menu.style.display="block";
 
 }
-
-
-animate();
-// CAR CONTROLS
-
-
-let speed = 0.05;
-
-
-// Move left
-
-function moveLeft(){
-
-car.position.x -= 0.5;
-
-}
-
-
-// Move right
-
-function moveRight(){
-
-car.position.x += 0.5;
-
-}
-
-
-// Increase speed
-
-function speedUp(){
-
-speed += 0.02;
 
 }
 
 
 
-// Car forward movement
-
-function drive(){
-
-car.position.z -= speed;
-
-}
-let gameStarted=false;
-
-let gameTime=0;
-
-let score=0;
-
-
-
-function startGame(){
-
-gameStarted=true;
-
-gameTime=0;
-
-score=0;
-
-}
-
-
-
-// Game information update
-
-function updateGame(){
-
-if(gameStarted){
-
-gameTime += 1/60;
-
-score += 1;
-
-}
-
-
-document.getElementById("time").innerHTML =
-Math.floor(gameTime);
-
-
-document.getElementById("score").innerHTML =
-score;
-
-
-document.getElementById("speed").innerHTML =
-Math.floor(speed*100);
-
-}
 // OPPONENT CARS
 
 let opponents=[];
@@ -444,8 +444,7 @@ let opponents=[];
 
 function createOpponent(z){
 
-let enemy =
-new THREE.Mesh(
+let enemy = new THREE.Mesh(
 
 new THREE.BoxGeometry(
 2,
@@ -469,12 +468,12 @@ z
 
 scene.add(enemy);
 
+
 opponents.push(enemy);
 
 }
 
 
-// Create opponents
 
 createOpponent(-40);
 
@@ -484,160 +483,127 @@ createOpponent(-120);
 
 
 
-// Move opponents
 
 function moveOpponents(){
 
 opponents.forEach(function(enemy){
 
-
 enemy.position.z += 0.05;
 
 
+if(enemy.position.z > car.position.z+10){
 
-if(enemy.position.z > car.position.z + 10){
-
-enemy.position.z =
-car.position.z - 100;
+enemy.position.z = car.position.z-100;
 
 }
-
 
 });
 
-
 }
 
 
 
-// Collision check
 
 function checkCollision(){
 
-
 opponents.forEach(function(enemy){
 
-
 let distance =
-car.position.distanceTo(
-enemy.position
-);
-
+car.position.distanceTo(enemy.position);
 
 
 if(distance < 2){
 
 speed = 0;
 
-
-alert("Crash! Try again 🚗💥");
-
+alert("Crash! 🚗💥");
 
 }
-
 
 });
 
-
 }
-// NITRO BOOST
-
-let normalSpeed = 0.05;
 
 
-function nitro(){
-
-speed = 0.2;
 
 
-setTimeout(function(){
+// SCORE SYSTEM
 
-speed = normalSpeed;
+function updateGame(){
 
-},3000);
+if(gameStarted){
 
-}
-// RESTART GAME
+gameTime += 1/60;
 
-function restartGame(){
-
-car.position.set(
-0,
-0,
-0
-);
-
-
-speed = normalSpeed;
-
-
-gameTime=0;
-
-score=0;
-
+score++;
 
 }
 
 
-// Hide menu after start
-
-function startGame(){
-
-gameStarted=true;
-
-document.getElementById("menu").style.display="none";
-
-}
-// CITY BUILDINGS
-
-function createBuilding(x,z){
-
-let buildingGeometry =
-new THREE.BoxGeometry(
-3,
-Math.random()*8+3,
-3
-);
+document.getElementById("time").innerHTML =
+Math.floor(gameTime);
 
 
-let buildingMaterial =
-new THREE.MeshPhongMaterial({
-color:0x777777
-});
+document.getElementById("score").innerHTML =
+score;
 
 
-let building =
-new THREE.Mesh(
-buildingGeometry,
-buildingMaterial
-);
-
-
-building.position.set(
-x,
-building.geometry.parameters.height/2,
-z
-);
-
-
-scene.add(building);
+document.getElementById("speed").innerHTML =
+Math.floor(speed*100);
 
 }
 
 
-// Add city buildings
 
-for(let i=0;i<30;i++){
+// MOVEMENT
 
-createBuilding(
--12,
--i*8
-);
+function drive(){
+
+if(gameStarted){
+
+car.position.z -= speed;
+
+}
+
+}
 
 
-createBuilding(
-12,
--i*8
+
+// ANIMATION
+
+function animate(){
+
+requestAnimationFrame(animate);
+
+
+drive();
+
+moveOpponents();
+
+checkCollision();
+
+updateGame();
+
+
+
+camera.position.z =
+car.position.z+12;
+
+
+camera.position.x =
+car.position.x;
+
+
+camera.lookAt(car.position);
+
+
+
+renderer.render(
+scene,
+camera
 );
 
 }
+
+
+animate();
