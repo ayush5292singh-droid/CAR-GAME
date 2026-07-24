@@ -588,3 +588,56 @@ gameStarted=true;
 document.getElementById("menu").style.display="none";
 
 }
+// CITY BUILDINGS
+
+function createBuilding(x,z){
+
+let buildingGeometry =
+new THREE.BoxGeometry(
+3,
+Math.random()*8+3,
+3
+);
+
+
+let buildingMaterial =
+new THREE.MeshPhongMaterial({
+color:0x777777
+});
+
+
+let building =
+new THREE.Mesh(
+buildingGeometry,
+buildingMaterial
+);
+
+
+building.position.set(
+x,
+building.geometry.parameters.height/2,
+z
+);
+
+
+scene.add(building);
+
+}
+
+
+// Add city buildings
+
+for(let i=0;i<30;i++){
+
+createBuilding(
+-12,
+-i*8
+);
+
+
+createBuilding(
+12,
+-i*8
+);
+
+}
